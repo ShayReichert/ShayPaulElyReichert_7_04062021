@@ -1,0 +1,322 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+////////////////////////////
+// ------ Variables ------ //
+////////////////////////////
+
+$primary: #3282f7;
+$success: #68d9a4;
+$danger: #ed6454;
+$grey: #e7e7e7;
+$white: #fff;
+$black: #000;
+$active: #94befb;
+
+$font-size-18-default: 1.1rem;
+$font-size-14: 0.9rem;
+$font-size-12: 0.7rem;
+
+$transition-base: all 0.5s ease-out;
+$margin-default: 25px;
+$border-radius: 5px;
+
+$xs: 550px;
+$sm: 850px;
+$md: 1024px;
+$lg: 1200px;
+
+////////////////////////////
+// ------ Mixins ------ //
+////////////////////////////
+
+@mixin screen-max($size) {
+  @media (max-width: $size) {
+    @content;
+  }
+}
+
+////////////////////////////
+// ------ Style ------ //
+////////////////////////////
+
+body {
+  padding: 2.6rem 6.2rem;
+  font-size: $font-size-18-default;
+
+  @include screen-max($lg) {
+    padding: 2.6rem 4.5rem;
+  }
+
+  @include screen-max($md) {
+    padding: 2.6rem 2.5rem;
+  }
+
+  @include screen-max($xs) {
+    padding: 2.6rem 1rem;
+  }
+}
+
+// General Components
+.primary-bg {
+  background: $primary;
+  color: $white;
+
+  &:hover,
+  &:focus {
+    background: $primary;
+  }
+}
+
+.success-bg {
+  background: $success;
+  color: $white;
+
+  &:hover,
+  &:focus {
+    background: $success;
+  }
+}
+
+.danger-bg {
+  background: $danger;
+  color: $white;
+
+  &:hover,
+  &:focus {
+    background: $danger;
+  }
+}
+
+.light-bg {
+  background: $white !important;
+}
+
+// Header
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Search Bar Section
+section.search-section {
+  margin-top: $margin-default;
+
+  .navbar {
+    display: block;
+    padding: 0;
+
+    .form-inline {
+      position: relative;
+      height: 70px;
+
+      .form-control,
+      .search-btn {
+        background: $grey;
+        color: $black;
+        height: 100%;
+        border: none;
+      }
+
+      .form-control {
+        margin-right: 0 !important;
+        width: 100%;
+
+        &::placeholder {
+          color: rgba($black, 0.25);
+        }
+      }
+
+      .search-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: default !important;
+        margin: 0 !important;
+
+        &:focus {
+          box-shadow: none !important;
+        }
+      }
+    }
+  }
+}
+
+// Tags button & Dropdowns
+section.dropdown-section {
+  min-height: 150px;
+
+  .tags-wrapper {
+    margin-top: $margin-default;
+
+    .btn {
+      padding: 0.4rem 1.2rem;
+      font-size: $font-size-14;
+      margin-bottom: 7px;
+      margin-right: 10px;
+
+      .close-btn {
+        margin-left: 0.6rem;
+        vertical-align: sub;
+      }
+    }
+  }
+
+  .dropdowns-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -10px;
+    margin-left: -10px;
+
+    .input-group {
+      height: 4.4rem;
+      width: auto;
+      margin: 8px 10px 0;
+
+      .form-control {
+        border: none;
+        box-shadow: none;
+        color: $white;
+        height: 100%;
+
+        &::placeholder {
+          color: $white;
+          opacity: 0.5;
+        }
+      }
+
+      .input-group-append {
+        &.show {
+          .arrow-down {
+            transform: rotate(-180deg);
+          }
+        }
+
+        .arrow-down {
+          transition: $transition-base;
+        }
+
+        .btn {
+          border: none;
+          box-shadow: none;
+
+          &:after {
+            display: none;
+          }
+        }
+      }
+
+      .dropdown-menu {
+        transform: translate3d(-999rem, -999rem, 0) !important;
+        right: 0;
+        border: none;
+        display: flex;
+        opacity: 0;
+
+        &.show {
+          transform: translate3d(0, 3.7rem, 0) !important;
+          opacity: 1;
+
+          a:hover {
+            font-weight: bold;
+            color: $white;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Cards
+section.cards-section {
+  .card-deck {
+    margin-right: -$margin-default;
+    margin-left: -$margin-default;
+  }
+
+  .card {
+    flex: 0 1 calc(33% - 47px);
+    border: none;
+    margin: $margin-default;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    @include screen-max($lg) {
+      flex: 0 1 calc(49% - 47px);
+    }
+
+    @include screen-max($sm) {
+      flex: 0 1 100%;
+    }
+
+    .card-body {
+      flex: 0 0 auto;
+      min-height: 186px;
+      background: $grey;
+      padding: 20px 18px;
+      border-radius: 0 0 $border-radius $border-radius;
+
+      h1 {
+        font-size: $font-size-18-default;
+        font-weight: normal;
+        margin: 0;
+      }
+    }
+
+    .first-row {
+      display: flex;
+      justify-content: space-between;
+      margin-right: -5px;
+      margin-left: -5px;
+
+      .card-title {
+        padding: 0 5px;
+      }
+
+      .card-timer {
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        font-weight: 700;
+        padding: 0 5px;
+
+        .clock-icon {
+          margin-right: 7px;
+        }
+      }
+    }
+
+    .second-row {
+      display: flex;
+      margin-right: -5px;
+      margin-left: -5px;
+
+      .card-ingredients {
+        width: 50%;
+        margin-top: 20px;
+        padding: 0 5px;
+        font-size: $font-size-12;
+
+        ul {
+          list-style: none;
+          padding: 0;
+          line-height: 1.2;
+
+          span {
+            font-weight: 700;
+          }
+        }
+      }
+
+      .card-recipe {
+        width: 50%;
+        font-size: $font-size-12;
+        line-height: 1;
+        margin-top: 20px;
+        padding: 0 5px;
+      }
+    }
+  }
+}
