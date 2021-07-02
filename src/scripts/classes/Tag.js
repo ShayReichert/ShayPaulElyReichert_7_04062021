@@ -2,6 +2,8 @@
  * TagButton Component
  */
 
+import { createImageElement } from "../functions/helpers.js";
+
 class TagButton {
   /**
    * Tag button
@@ -11,9 +13,7 @@ class TagButton {
    */
   constructor(parentElement, tagValue, className) {
     if (parentElement === null || typeof parentElement !== "object") {
-      console.error(
-        "The first parameter of the TagButton must be a valid HTML element (such as a div or section)."
-      );
+      console.error("The first parameter of the TagButton must be a valid HTML element (such as a div or section).");
       return;
     }
     this.parentElement = parentElement;
@@ -41,10 +41,7 @@ class TagButton {
     tagNode.appendChild(tagContent);
 
     // Create the <img> html element for the close Icon
-    const closeIcon = document.createElement("img");
-    closeIcon.setAttribute("src", "./assets/close-vector.svg");
-    closeIcon.setAttribute("class", "close-btn");
-    closeIcon.setAttribute("alt", "");
+    const closeIcon = createImageElement("./assets/close-vector.svg", "close-btn");
     tagNode.appendChild(closeIcon);
 
     return tagNode;

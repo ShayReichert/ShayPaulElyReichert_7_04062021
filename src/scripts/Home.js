@@ -1,4 +1,6 @@
 import TagButton from "./classes/Tag.js";
+import RecipeCard from "./classes/Card";
+import { loadData } from "./functions/helpers.js";
 
 /**
  * Home Component
@@ -30,6 +32,8 @@ class Home {
     this.dropDownItem.map((item) => item.addEventListener("click", this.handleClickOnItems.bind(this)));
     this.tagButtons.map((btn) => btn.addEventListener("click", this.deleteTag));
     this.searchBtn.addEventListener("click", (e) => e.preventDefault);
+
+    this.initDataCards();
   }
 
   /**
@@ -88,6 +92,31 @@ class Home {
    */
   deleteTag() {
     this.remove();
+  }
+
+  /**
+   * initDataCards Function
+   * Fetch recipe data.
+   */
+  initDataCards() {
+    (async function () {
+      return await loadData();
+    })().then((result) => this.createCard(result));
+  }
+
+  /**
+   * createCard Function
+   * Cards created from data.
+   * @param  {array} data
+   */
+  createCard(data) {
+    const cardWrapper = document.querySelector(".card-deck");
+    cardWrapper.innerHTML = "";
+
+    data.map((recette) => {
+      const cardRecette = new RecipeCard(cardWrapper, recette);
+      cardRecette.createCard();
+    });
   }
 }
 
