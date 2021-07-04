@@ -1,4 +1,5 @@
-import TagButton from "./classes/Tag.js";
+import TagButton from "./classes/TagButton.js";
+import TagsDropdown from "./classes/TagDropdown.js";
 import RecipeCard from "./classes/Card";
 import { loadData } from "./functions/helpers.js";
 
@@ -33,7 +34,7 @@ class Home {
     this.tagButtons.map((btn) => btn.addEventListener("click", this.deleteTag));
     this.searchBtn.addEventListener("click", (e) => e.preventDefault);
 
-    this.initDataCards();
+    this.initData();
   }
 
   /**
@@ -83,7 +84,10 @@ class Home {
    */
   addEventListenerOnNewTags() {
     const tagButtons = Array.from(this.tagsWrapper.querySelectorAll(".btn"));
+    const dropDownItem = Array.from(document.querySelectorAll(".dropdown-item"));
+
     tagButtons.map((btn) => btn.addEventListener("click", this.deleteTag));
+    dropDownItem.map((item) => item.addEventListener("click", this.handleClickOnItems.bind(this)));
   }
 
   /**
@@ -95,21 +99,46 @@ class Home {
   }
 
   /**
-   * initDataCards Function
+   * initData Function
    * Fetch recipe data.
    */
-  initDataCards() {
+  initData() {
     (async function () {
       return await loadData();
-    })().then((result) => this.createCard(result));
+    })().then((result) => {
+      this.createTagsDropdown(result);
+      this.createCards(result);
+    });
   }
 
   /**
-   * createCard Function
+   * createTagsDropdown Function
+   * Dropdown tags created from data.
+   * @param {array} data
+   */
+  createTagsDropdown(data) {
+    const ingredientsWrapper = document.querySelector(".dropdown-menu-ingredients");
+    const applianceWrapper = document.querySelector(".dropdown-menu-appliance");
+    const ustensilsWrapper = document.querySelector(".dropdown-menu-ustensils");
+    const allDropdowns = [ingredientsWrapper, applianceWrapper, ustensilsWrapper];
+
+    allDropdowns.map((dropdown) => {
+      dropdown.innerHTML = "";
+    });
+
+    // new TagsDropdown(ingredientsWrapper, data, "ingredients", "ingredient").createTags();
+    new TagsDropdown(applianceWrapper, data, "appliance").createTags();
+    // new TagsDropdown(ustensilsWrapper, data, "ustensils").createTags();
+
+    this.addEventListenerOnNewTags();
+  }
+
+  /**
+   * createCards Function
    * Cards created from data.
    * @param  {array} data
    */
-  createCard(data) {
+  createCards(data) {
     const cardWrapper = document.querySelector(".card-deck");
     cardWrapper.innerHTML = "";
 

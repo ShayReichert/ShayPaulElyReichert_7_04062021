@@ -16,7 +16,7 @@ class RecipeCard {
       return;
     }
     this.parentElement = parentElement;
-    this.allData = recipeData;
+    // this.allData = recipeData;
     this.id = recipeData.id;
     this.name = recipeData.name;
     this.time = recipeData.time;
@@ -40,7 +40,7 @@ class RecipeCard {
    * Generate the <img> placeholder of the card
    */
   getTheImage() {
-    return createImageElement("assets/placeholder.png", "Card image cap", "card-img-top");
+    return createImageElement("assets/images/placeholder.png", "Card image cap", "card-img-top");
   }
 
   /**

@@ -221,6 +221,10 @@ section.dropdown-section {
             color: $white;
           }
         }
+
+        .dropdown-item {
+          text-transform: capitalize;
+        }
       }
     }
   }
@@ -254,21 +258,9 @@ section.cards-section {
     .card-body {
       flex: 0 0 auto;
       height: 186px;
-      overflow: hidden;
       background: $grey;
       padding: 20px 18px;
       border-radius: 0 0 $border-radius $border-radius;
-
-      // &::before {
-      //   content: "...";
-      //   position: absolute;
-      //   right: 0;
-      //   bottom: 15px;
-      //   background: transparent;
-      //   height: 20px;
-      //   width: 48%;
-      //   z-index: 2;
-      // }
 
       &::after {
         content: "";
@@ -317,13 +309,18 @@ section.cards-section {
       display: flex;
       margin-right: -5px;
       margin-left: -5px;
+      margin-top: 20px;
+
+      .card-ingredients,
+      .card-recipe {
+        width: 50%;
+        padding: 0 5px 1rem;
+        font-size: $font-size-12;
+        height: 99px;
+        overflow: scroll;
+      }
 
       .card-ingredients {
-        width: 50%;
-        margin-top: 20px;
-        padding: 0 5px;
-        font-size: $font-size-12;
-
         ul {
           list-style: none;
           padding: 0;
@@ -336,11 +333,7 @@ section.cards-section {
       }
 
       .card-recipe {
-        width: 50%;
-        font-size: $font-size-12;
         line-height: 1;
-        margin-top: 20px;
-        padding: 0 5px;
       }
     }
   }

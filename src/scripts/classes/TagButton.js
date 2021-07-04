@@ -6,7 +6,7 @@ import { createImageElement } from "../functions/helpers.js";
 
 class TagButton {
   /**
-   * Tag button
+   * Create button from a tag clicked in the dropdown component
    * @param {HTMLElement} parentElement Wrapper HTML element
    * @param {string} tagValue Tag value
    * @param {string} className Tag class name
@@ -41,8 +41,8 @@ class TagButton {
     tagNode.appendChild(tagContent);
 
     // Create the <img> html element for the close Icon
-    const closeIcon = createImageElement("./assets/close-vector.svg", "close-btn");
-    tagNode.appendChild(closeIcon);
+    const closeIcon = createImageElement("./assets/close-vector.svg", "", "close-btn");
+    tagNode.append(closeIcon);
 
     return tagNode;
   }
