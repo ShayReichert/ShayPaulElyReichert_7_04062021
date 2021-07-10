@@ -3,6 +3,7 @@
  */
 
 import { createImageElement } from "../functions/helpers.js";
+import close from "../../assets/close-vector.svg";
 
 class TagButton {
   /**
@@ -41,7 +42,7 @@ class TagButton {
     tagNode.appendChild(tagContent);
 
     // Create the <img> html element for the close Icon
-    const closeIcon = createImageElement("./assets/close-vector.svg", "", "close-btn");
+    const closeIcon = createImageElement(close, "", "close-btn");
     tagNode.append(closeIcon);
 
     return tagNode;

@@ -3,6 +3,8 @@
  */
 
 import { createImageElement, createHTMLNodeElement, createNodesElements } from "../functions/helpers.js";
+import placeholder from "../../assets/images/placeholder.png";
+import clock from "../../assets/clock.svg";
 
 class RecipeCard {
   /**
@@ -16,7 +18,6 @@ class RecipeCard {
       return;
     }
     this.parentElement = parentElement;
-    // this.allData = recipeData;
     this.id = recipeData.id;
     this.name = recipeData.name;
     this.time = recipeData.time;
@@ -40,7 +41,7 @@ class RecipeCard {
    * Generate the <img> placeholder of the card
    */
   getTheImage() {
-    return createImageElement("assets/images/placeholder.png", "Card image cap", "card-img-top");
+    return createImageElement(placeholder, "Card image cap", "card-img-top");
   }
 
   /**
@@ -92,7 +93,7 @@ class RecipeCard {
     const timeNode = createHTMLNodeElement(format, ` ${this.time} min`, className);
 
     // Create the <img> html element for the clock Icon
-    const clockIcon = createImageElement("./assets/clock.svg", "", "clock-icon");
+    const clockIcon = createImageElement(clock, "", "clock-icon");
     timeNode.prepend(clockIcon);
     return timeNode;
   }

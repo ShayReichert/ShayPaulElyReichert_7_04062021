@@ -60,4 +60,16 @@ function createImageElement(path = "", alt = "", className = "icon") {
   return icon;
 }
 
-export { loadData, createImageElement, createHTMLNodeElement, createNodesElements };
+/**
+ * Return the average element width based on all elements width
+ * @param {array} values An array on html elements
+ */
+function getAveragetWidthItem(values) {
+  const allWidth = [];
+  values.map((item) => allWidth.push(item.offsetWidth));
+
+  const avergage = allWidth.reduce((a, b) => a + b) / allWidth.length;
+  return avergage;
+}
+
+export { loadData, createImageElement, createHTMLNodeElement, createNodesElements, getAveragetWidthItem };

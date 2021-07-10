@@ -1,7 +1,7 @@
 import TagButton from "./classes/TagButton.js";
 import TagsDropdown from "./classes/TagDropdown.js";
 import RecipeCard from "./classes/Card";
-import { loadData } from "./functions/helpers.js";
+import { loadData, getAveragetWidthItem } from "./functions/helpers.js";
 
 /**
  * Home Component
@@ -54,11 +54,21 @@ class Home {
   setWidthOfInput() {
     const inputGroup = this.parentNode.parentNode;
     const input = inputGroup.querySelector(".form-control");
-    const columnWidth = inputGroup.querySelector(".dropdown-col").offsetWidth;
-    const numberOfColumns = inputGroup.querySelectorAll(".dropdown-col").length;
-    const newSize = numberOfColumns * columnWidth;
+    const isShow = inputGroup.querySelector(".dropdown-menu").classList.contains("show");
 
-    input.style.minWidth = newSize + "px";
+    if (!isShow) {
+      const allTags = Array.from(inputGroup.querySelectorAll(".dropdown-item"));
+      const averagetWidthItem = getAveragetWidthItem(allTags);
+
+      const numberOfTags = inputGroup.querySelectorAll(".dropdown-item").length;
+      const numberOfColumns = Math.ceil(numberOfTags / 10);
+
+      const newInputSize = numberOfColumns * averagetWidthItem;
+
+      input.style.width = newInputSize + "px";
+    } else {
+      input.style.width = "auto";
+    }
   }
 
   /**
@@ -74,19 +84,38 @@ class Home {
     const cardTag = new TagButton(tagsWrapper, tagValue, classValue);
     cardTag.createTagButtons();
 
-    this.addEventListenerOnNewTags();
+    this.resetWidthOfInputs();
+    this.addEventListenerOnNewTagsButton();
   }
 
   /**
-   * addEventListenerOnNewTags Function
-   * Add a event listener to the new tags created.
+   * resetWidthOfInputs Function
+   * Reset the width of all dropdowns input to their original width
+   */
+  resetWidthOfInputs() {
+    const allInput = Array.from(document.querySelectorAll(".dropdowns-wrapper .form-control"));
+    allInput.map((input) => {
+      input.style.width = "auto";
+    });
+  }
+
+  /**
+   * addEventListenerOnNewTagsButton Function
+   * Add a event listener to the new tags button created.
    *
    */
-  addEventListenerOnNewTags() {
+  addEventListenerOnNewTagsButton() {
     const tagButtons = Array.from(this.tagsWrapper.querySelectorAll(".btn"));
-    const dropDownItem = Array.from(document.querySelectorAll(".dropdown-item"));
-
     tagButtons.map((btn) => btn.addEventListener("click", this.deleteTag));
+  }
+
+  /**
+   * addEventListenerOnNewTagsItems Function
+   * Add a event listener to the new tags item created.
+   *
+   */
+  addEventListenerOnNewTagsItems() {
+    const dropDownItem = Array.from(document.querySelectorAll(".dropdown-item"));
     dropDownItem.map((item) => item.addEventListener("click", this.handleClickOnItems.bind(this)));
   }
 
@@ -126,11 +155,11 @@ class Home {
       dropdown.innerHTML = "";
     });
 
-    // new TagsDropdown(ingredientsWrapper, data, "ingredients", "ingredient").createTags();
+    new TagsDropdown(ingredientsWrapper, data, "ingredients", "ingredient").createTags();
     new TagsDropdown(applianceWrapper, data, "appliance").createTags();
-    // new TagsDropdown(ustensilsWrapper, data, "ustensils").createTags();
+    new TagsDropdown(ustensilsWrapper, data, "ustensils").createTags();
 
-    this.addEventListenerOnNewTags();
+    this.addEventListenerOnNewTagsItems();
   }
 
   /**

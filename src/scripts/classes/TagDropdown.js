@@ -28,12 +28,11 @@ class TagsDropdown {
    */
   createTags() {
     const tagsData = this.getTagsData();
-    // const tagsElement = this.getTagsElement(tagsData, this.category);
-    const tagsElement = this.getTagsElementWork(tagsData, this.category);
+    const tagsElement = this.getAllTagsLinks(tagsData, this.category);
 
-    const colWrapper = createNodesElements("div", tagsElement, "dropdown-col");
-
-    this.parentElement.append(colWrapper);
+    tagsElement.map((element) => {
+      this.parentElement.append(element);
+    });
   }
 
   /**
@@ -76,47 +75,9 @@ class TagsDropdown {
   }
 
   /**
-   * Generate the html of all tags in dropdown
+   * Generate the html of all tags
    */
-  //   getTagsElementTEst(data, category) {
-  //     const classColor = this.setClassName(category);
-  //     const className = `dropdown-item ${classColor}-bg`;
-
-  //     // let tenLinks = [];
-  //     let colsArray = [];
-
-  //     data.map((item, index) => {
-  //       const isEndsWithZero = index % 10 === 0;
-
-  //       if (isEndsWithZero) {
-  //         let colWrapperNode = document.createElement("div");
-  //         colWrapperNode.setAttribute("class", "dropdown-col");
-  //         colsArray.push(colWrapperNode);
-  //       }
-  //     });
-
-  //     console.log(colsArray.length);
-  //     // créer un array avec [colsArray.length] d'arrays.
-  //     // itérer sur cet array ?
-
-  //     colsArray.map((col) => {
-  //       while (col.childElementCount < 10) {
-  //         data.map((item) => {
-  //           const linkElement = createHTMLNodeElement("a", item, className);
-  //           col.append(linkElement);
-  //         });
-  //       }
-  //     });
-
-  //     // console.log(test);
-
-  //     // return colsArray;
-  //   }
-
-  /**
-   * Generate the html of all tags in dropdown
-   */
-  getTagsElementWork(data, category) {
+  getAllTagsLinks(data, category) {
     const classColor = this.setClassName(category);
     const className = `dropdown-item ${classColor}-bg`;
 

@@ -1,4 +1,6 @@
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "./loader";
+
 ////////////////////////////
 // ------ Variables ------ //
 ////////////////////////////
@@ -37,8 +39,8 @@ $lg: 1200px;
 ////////////////////////////
 // ------ Style ------ //
 ////////////////////////////
-
 body {
+  opacity: 1;
   padding: 2.6rem 6.2rem;
   font-size: $font-size-18-default;
 
@@ -154,6 +156,11 @@ section.dropdown-section {
       margin-bottom: 7px;
       margin-right: 10px;
 
+      &:hover {
+        color: $white;
+        opacity: 0.8;
+      }
+
       .close-btn {
         margin-left: 0.6rem;
         vertical-align: sub;
@@ -206,10 +213,14 @@ section.dropdown-section {
       }
 
       .dropdown-menu {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-content: flex-start;
+        max-height: 350px;
         transform: translate3d(-999rem, -999rem, 0) !important;
         right: 0;
         border: none;
-        display: flex;
         opacity: 0;
 
         &.show {
@@ -217,13 +228,15 @@ section.dropdown-section {
           opacity: 1;
 
           a:hover {
-            font-weight: bold;
             color: $white;
+            opacity: 0.8;
           }
         }
 
         .dropdown-item {
           text-transform: capitalize;
+          width: auto;
+          cursor: pointer;
         }
       }
     }
@@ -337,4 +350,9 @@ section.cards-section {
       }
     }
   }
+}
+
+// Keep that at the end of the css file !
+#loadOverlay {
+  display: none;
 }
