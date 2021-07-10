@@ -2,7 +2,7 @@
  * TagsDropdown Component
  */
 
-import { createHTMLNodeElement, createNodesElements } from "../functions/helpers.js";
+import { createHTMLNodeElement } from "../functions/helpers.js";
 
 class TagsDropdown {
   /**
