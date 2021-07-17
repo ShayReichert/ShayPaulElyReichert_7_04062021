@@ -7,12 +7,12 @@ module.exports = {
     main: "./src/index.js",
   },
   output: {
-    path: path.join(__dirname, "../build"),
+    path: path.join(__dirname, "../docs"),
     filename: "[name].bundle.js",
   },
   mode: "development",
   devServer: {
-    contentBase: path.join(__dirname, "../build"),
+    contentBase: path.join(__dirname, "../docs"),
     compress: true,
     port: 3000,
     overlay: true,
@@ -63,7 +63,7 @@ module.exports = {
   },
   plugins: [
     // CleanWebpackPlugin will do some clean up/remove folder before build
-    // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
+    // In this case, this plugin will remove 'dist' and 'build' (or 'docs') folder before re-build again
     new CleanWebpackPlugin(),
     // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
     new HtmlWebpackPlugin({
