@@ -21,6 +21,7 @@ class Home {
     this.dropDownItem = Array.from(document.querySelectorAll(".dropdown-item"));
     this.tagButtons = Array.from(this.tagsWrapper.querySelectorAll(".btn"));
     this.searchBtn = document.querySelector(".search-btn");
+    this.searchInput = document.querySelector(".search-input");
   }
 
   /**
@@ -33,6 +34,7 @@ class Home {
     this.dropDownItem.map((item) => item.addEventListener("click", this.handleClickOnItems.bind(this)));
     this.tagButtons.map((btn) => btn.addEventListener("click", this.deleteTag));
     this.searchBtn.addEventListener("click", (e) => e.preventDefault);
+    this.searchInput.addEventListener("keyup", this.handleSearch.bind(this));
 
     this.initData();
   }
@@ -174,6 +176,35 @@ class Home {
     data.map((recette) => {
       const cardRecette = new RecipeCard(cardWrapper, recette);
       cardRecette.createCard();
+    });
+  }
+
+  //////// SEARCH LOGIC ////////
+
+  handleSearch() {
+    const searchValue = this.searchInput.value;
+
+    if (searchValue.length === 0) {
+      this.initData();
+    } else if (searchValue.length < 3) {
+      return;
+    } else {
+      this.getFilterData(searchValue);
+    }
+  }
+
+  getFilterData(searchValue) {
+    const allRecipeCards = Array.from(document.querySelectorAll(".cards-section .card"));
+
+    allRecipeCards.map((card) => {
+      const recipeName = card.querySelector(".card-title").textContent;
+      const recipeDescription = card.querySelector(".card-recipe").textContent;
+
+      if (recipeName.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 || recipeDescription.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1) {
+        card.style.display = "flex";
+      } else {
+        card.style.display = "none";
+      }
     });
   }
 }

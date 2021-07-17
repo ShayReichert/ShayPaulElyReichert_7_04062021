@@ -1,9 +1,8 @@
+import { createHTMLNodeElement } from "../functions/helpers.js";
+
 /**
  * TagsDropdown Component
  */
-
-import { createHTMLNodeElement } from "../functions/helpers.js";
-
 class TagsDropdown {
   /**
    * Create a dropdown with all unique values from a category (fetch from data)
