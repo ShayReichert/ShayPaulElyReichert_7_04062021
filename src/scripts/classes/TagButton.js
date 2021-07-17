@@ -1,10 +1,9 @@
-/**
- * TagButton Component
- */
-
 import { createImageElement } from "../functions/helpers.js";
 import close from "../../assets/close-vector.svg";
 
+/**
+ * TagButton Component
+ */
 class TagButton {
   /**
    * Create button from a tag clicked in the dropdown component

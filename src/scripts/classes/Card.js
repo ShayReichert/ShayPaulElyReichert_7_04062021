@@ -1,11 +1,10 @@
-/**
- * RecipeCard Component
- */
-
 import { createImageElement, createHTMLNodeElement, createNodesElements } from "../functions/helpers.js";
 import placeholder from "../../assets/images/placeholder.png";
 import clock from "../../assets/clock.svg";
 
+/**
+ * RecipeCard Component
+ */
 class RecipeCard {
   /**
    * Recipe card

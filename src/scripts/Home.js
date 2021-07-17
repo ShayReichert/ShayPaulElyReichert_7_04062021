@@ -21,8 +21,6 @@ class Home {
     this.dropDownItem = Array.from(document.querySelectorAll(".dropdown-item"));
     this.tagButtons = Array.from(this.tagsWrapper.querySelectorAll(".btn"));
     this.searchBtn = document.querySelector(".search-btn");
-
-    // Filter
     this.searchInput = document.querySelector(".search-input");
   }
 
@@ -36,8 +34,6 @@ class Home {
     this.dropDownItem.map((item) => item.addEventListener("click", this.handleClickOnItems.bind(this)));
     this.tagButtons.map((btn) => btn.addEventListener("click", this.deleteTag));
     this.searchBtn.addEventListener("click", (e) => e.preventDefault());
-
-    // Filter
     this.searchInput.addEventListener("keyup", this.handleFilter.bind(this));
 
     this.initData();
@@ -183,10 +179,16 @@ class Home {
     });
   }
 
-  // FILTER LOGIC #01 //
+  //////// FILTER LOGIC ////////
 
+  /**
+   * handleFilter Function
+   * Trigger search function if the lenght of the word is greater than or equal to 3.
+   * If no words are typed, show all results.
+   */
   handleFilter() {
     const searchValue = this.searchInput.value;
+
     if (searchValue.length === 0) {
       this.initData();
     } else if (searchValue.length < 3) {
@@ -197,33 +199,30 @@ class Home {
   }
 
   /**
-   * filteredData Function
-   * Fetch recipe data and filter data with the user's search (in the search input)
+   * initFilterData Function
+   * Fetch recipe data and filter data with the user's search
+   * @param  {string} searchValue
    */
   initFilterData(searchValue) {
     (async function () {
       return await loadData();
     })().then((result) => {
-      this.testingFilterData(result, searchValue);
+      this.getFilterData(result, searchValue);
     });
   }
 
   /**
-   * testingFilterData Function
-   * Filter data with the input field.
+   * getFilterData Function
+   * Filter the data according to their name and description field
    * @param  {array} data
+   * @param  {string} searchValue
    */
-  testingFilterData(data, searchValue) {
-    const filterData = this.getFilterData(data, searchValue);
-    this.createCards(filterData);
-  }
-
   getFilterData(data, searchValue) {
-    // retourner les data filtrer avec l'input value
-    // Filtrer les data à partir de leur champ Nom et Description
-    return data.filter((recipe) => {
+    const filterData = data.filter((recipe) => {
       return recipe.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 || recipe.description.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1;
     });
+
+    this.createCards(filterData);
   }
 }
 
