@@ -14,7 +14,7 @@ module.exports = {
     main: "./src/index.js",
   },
   output: {
-    path: path.join(__dirname, "../build"),
+    path: path.join(__dirname, "../docs"),
     filename: "[name].[chunkhash:8].bundle.js",
     chunkFilename: "[name].[chunkhash:8].chunk.js",
   },
@@ -80,7 +80,7 @@ module.exports = {
   },
   plugins: [
     // CleanWebpackPlugin will do some clean up/remove folder before build
-    // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
+    // In this case, this plugin will remove 'dist' and 'build' (or 'docs') folder before re-build again
     new CleanWebpackPlugin(),
     // PurgecssPlugin will remove unused CSS
     // new PurgecssPlugin({
