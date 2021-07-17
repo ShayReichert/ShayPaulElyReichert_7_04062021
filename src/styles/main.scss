@@ -43,6 +43,8 @@ body {
   opacity: 1;
   padding: 2.6rem 6.2rem;
   font-size: $font-size-18-default;
+  max-width: 1800px;
+  margin: auto;
 
   @include screen-max($lg) {
     padding: 2.6rem 4.5rem;
