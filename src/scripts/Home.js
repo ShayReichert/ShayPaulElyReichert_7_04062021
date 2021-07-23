@@ -187,6 +187,7 @@ class Home {
    * If no words are typed, show all results.
    */
   handleFilter() {
+    const t0 = performance.now();
     const searchValue = this.searchInput.value;
 
     if (searchValue.length === 0) {
@@ -194,7 +195,7 @@ class Home {
     } else if (searchValue.length < 3) {
       return;
     } else {
-      this.initFilterData(searchValue);
+      this.initFilterData(searchValue, t0);
     }
   }
 
@@ -203,11 +204,11 @@ class Home {
    * Fetch recipe data and filter data with the user's search
    * @param  {string} searchValue
    */
-  initFilterData(searchValue) {
+  initFilterData(searchValue, t0) {
     (async function () {
       return await loadData();
     })().then((result) => {
-      this.getFilterData(result, searchValue);
+      this.getFilterData(result, searchValue, t0);
     });
   }
 
@@ -217,12 +218,14 @@ class Home {
    * @param  {array} data
    * @param  {string} searchValue
    */
-  getFilterData(data, searchValue) {
+  getFilterData(data, searchValue, t0) {
     const filterData = data.filter((recipe) => {
       return recipe.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 || recipe.description.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1;
     });
 
     this.createCards(filterData);
+    const t1 = performance.now();
+    console.log("L'algo de filtrage 'searchFromData' a demandé " + (t1 - t0) + " millisecondes.");
   }
 }
 
