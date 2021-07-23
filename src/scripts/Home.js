@@ -182,6 +182,7 @@ class Home {
   //////// SEARCH LOGIC ////////
 
   handleSearch() {
+    const t0 = performance.now();
     const searchValue = this.searchInput.value;
 
     if (searchValue.length === 0) {
@@ -189,11 +190,11 @@ class Home {
     } else if (searchValue.length < 3) {
       return;
     } else {
-      this.getFilterData(searchValue);
+      this.getFilterData(searchValue, t0);
     }
   }
 
-  getFilterData(searchValue) {
+  getFilterData(searchValue, t0) {
     const allRecipeCards = Array.from(document.querySelectorAll(".cards-section .card"));
 
     allRecipeCards.map((card) => {
@@ -206,6 +207,9 @@ class Home {
         card.style.display = "none";
       }
     });
+
+    const t1 = performance.now();
+    console.log("L'algo searchFromDOM a demandé " + (t1 - t0) + " millisecondes.");
   }
 }
 
