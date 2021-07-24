@@ -200,8 +200,13 @@ class Home {
     allRecipeCards.map((card) => {
       const recipeName = card.querySelector(".card-title").textContent;
       const recipeDescription = card.querySelector(".card-recipe").textContent;
+      const recipeIngredients = card.querySelector(".card-ingredients").textContent;
 
-      if (recipeName.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 || recipeDescription.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1) {
+      if (
+        recipeName.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
+        recipeDescription.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
+        recipeIngredients.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
+      ) {
         card.style.display = "flex";
       } else {
         card.style.display = "none";
