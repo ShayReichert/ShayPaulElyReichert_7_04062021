@@ -72,4 +72,17 @@ function getAveragetWidthItem(values) {
   return avergage;
 }
 
-export { loadData, createImageElement, createHTMLNodeElement, createNodesElements, getAveragetWidthItem };
+/**
+ * Check if an html element exist in the document.
+ * If it isn't "undefined" and it isn't "null", then it exists.
+ * @param {HTMLElement} element HTML element to check
+ */
+function isElementExist(element) {
+  if (typeof element != "undefined" && element != null) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export { loadData, createImageElement, createHTMLNodeElement, createNodesElements, getAveragetWidthItem, isElementExist };

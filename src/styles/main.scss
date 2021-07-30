@@ -157,6 +157,7 @@ section.dropdown-section {
       font-size: $font-size-14;
       margin-bottom: 7px;
       margin-right: 10px;
+      text-transform: capitalize;
 
       &:hover {
         color: $white;
@@ -260,6 +261,10 @@ section.cards-section {
 
     &:hover {
       opacity: 0.9;
+    }
+
+    &.hide {
+      display: none;
     }
 
     @include screen-max($lg) {

@@ -1,6 +1,7 @@
 import TagButton from "./classes/TagButton.js";
 import TagsDropdown from "./classes/TagDropdown.js";
 import RecipeCard from "./classes/Card";
+import Search from "./classes/Search";
 import { loadData, getAveragetWidthItem } from "./functions/helpers.js";
 
 /**
@@ -33,6 +34,7 @@ class Home {
     this.dropdownArrows.map((arrow) => arrow.addEventListener("click", this.setWidthOfInput));
     this.dropDownItem.map((item) => item.addEventListener("click", this.handleClickOnItems.bind(this)));
     this.tagButtons.map((btn) => btn.addEventListener("click", this.deleteTag));
+    // this.tagButtons.map((btn) => btn.addEventListener("click", this.handleSearch));
     this.searchBtn.addEventListener("click", (e) => e.preventDefault);
     this.searchInput.addEventListener("keyup", this.handleSearch.bind(this));
 
@@ -88,11 +90,12 @@ class Home {
 
     this.resetWidthOfInputs();
     this.addEventListenerOnNewTagsButton();
+    // this.handleSearchFromTags(tagValue);
   }
 
   /**
    * resetWidthOfInputs Function
-   * Reset the width of all dropdowns input to their original width
+   * Reset the width of all dropdowns input to their original width.
    */
   resetWidthOfInputs() {
     const allInput = Array.from(document.querySelectorAll(".dropdowns-wrapper .form-control"));
@@ -179,43 +182,34 @@ class Home {
     });
   }
 
-  //////// SEARCH LOGIC ////////
-
+  /**
+   * handleSearch Function
+   * Create a new search if the user enters a value in the search bar.
+   */
   handleSearch() {
     const t0 = performance.now();
     const searchValue = this.searchInput.value;
+
+    // Check if the search is from input or tags
+    // if (tagValue instanceof KeyboardEvent) {
+    //   searchValue = this.searchInput.value;
+    // } else {
+    //   searchValue = tagValue;
+    // }
 
     if (searchValue.length === 0) {
       this.initData();
     } else if (searchValue.length < 3) {
       return;
     } else {
-      this.getFilterData(searchValue, t0);
+      const mySearch = new Search();
+      mySearch.searchWithInput(searchValue, t0);
     }
   }
 
-  getFilterData(searchValue, t0) {
-    const allRecipeCards = Array.from(document.querySelectorAll(".cards-section .card"));
+  // handleSearchFromTags(tagValue) {
 
-    allRecipeCards.map((card) => {
-      const recipeName = card.querySelector(".card-title").textContent;
-      const recipeDescription = card.querySelector(".card-recipe").textContent;
-      const recipeIngredients = card.querySelector(".card-ingredients").textContent;
-
-      if (
-        recipeName.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
-        recipeDescription.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
-        recipeIngredients.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
-      ) {
-        card.style.display = "flex";
-      } else {
-        card.style.display = "none";
-      }
-    });
-
-    const t1 = performance.now();
-    console.log("L'algo searchFromDOM a demandé " + (t1 - t0) + " millisecondes.");
-  }
+  // }
 }
 
 export default Home;
