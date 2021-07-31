@@ -7,22 +7,18 @@ class Search {
   constructor() {}
 
   /**
-   * Init a search from search input.
+   * Hide cards if the search term or the tags does not appear in the recipe.
    */
-  searchWithInput(searchValue, t0) {
-    this.getFilterData(searchValue, t0);
-  }
-
-  /**
-   * Hide cards if the search term does not appear in the recipe.
-   */
-  getFilterData(searchValue, t0) {
+  getFilterData(input, t0) {
     const allRecipeCards = Array.from(document.querySelectorAll(".cards-section .card"));
 
     allRecipeCards.map((card) => {
-      // console.log(this.isRecipeContainIngredientsTags(card));
-
-      if (this.isRecipeContainSearchTerm(searchValue, card) && this.isRecipeContainIngredientsTags(card)) {
+      if (
+        this.isRecipeContainSearchTerm(input, card) &&
+        this.isRecipeContainActiveTags("ingredients", card) &&
+        this.isRecipeContainActiveTags("appliance", card) &&
+        this.isRecipeContainActiveTags("ustensils", card)
+      ) {
         card.classList.remove("hide");
       } else {
         card.classList.add("hide");
@@ -33,7 +29,11 @@ class Search {
     // console.log("L'algo searchFromDOM a demandé " + (t1 - t0) + " millisecondes.");
   }
 
-  isRecipeContainSearchTerm(searchValue, card) {
+  /**
+   * Return true if the recipe card contain the search value
+   */
+  isRecipeContainSearchTerm(input, card) {
+    const searchValue = input.value;
     const recipeName = card.querySelector(".card-title").textContent;
     const recipeDescription = card.querySelector(".card-recipe").textContent;
     const recipeIngredients = card.querySelector(".card-ingredients").textContent;
@@ -49,19 +49,43 @@ class Search {
     }
   }
 
-  isRecipeContainIngredientsTags(card) {
-    const activeTag = document.querySelector(".tags-wrapper .btn");
-    const recipeIngredients = card.querySelector(".card-ingredients").textContent;
+  /**
+   * Return true if the recipe card contain the active tag(s)
+   */
+  isRecipeContainActiveTags(tagCategory, card) {
+    let className = "";
 
-    if (isElementExist(activeTag)) {
-      if (recipeIngredients.toLowerCase().indexOf(activeTag.textContent.toLowerCase()) !== -1) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return true;
+    switch (tagCategory) {
+      case "ingredients":
+        className = "primary";
+        break;
+      case "appliance":
+        className = "success";
+        break;
+      case "ustensils":
+      default:
+        className = "danger";
     }
+
+    const allActiveTags = Array.from(document.querySelectorAll(`.tags-wrapper .btn.${className}-bg`));
+    const recipeContent = card.querySelector(`.card-${tagCategory}`).textContent;
+
+    let isCardContainThisTag = [];
+    let isCardContainsAllActiveTags = true;
+
+    allActiveTags.map((tag) => {
+      if (isElementExist(tag)) {
+        if (recipeContent.toLowerCase().indexOf(tag.textContent.toLowerCase()) !== -1) {
+          isCardContainThisTag.push(true);
+        } else {
+          isCardContainThisTag.push(false);
+        }
+      }
+    });
+
+    isCardContainsAllActiveTags = isCardContainThisTag.reduce((sum, next) => sum && next, true);
+
+    return isCardContainsAllActiveTags;
   }
 }
 

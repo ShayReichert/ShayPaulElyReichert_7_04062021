@@ -33,7 +33,7 @@ class Home {
     this.dropdownInputs.map((input) => input.addEventListener("click", this.clearInputOnClick));
     this.dropdownArrows.map((arrow) => arrow.addEventListener("click", this.setWidthOfInput));
     this.dropDownItem.map((item) => item.addEventListener("click", this.handleClickOnItems.bind(this)));
-    this.tagButtons.map((btn) => btn.addEventListener("click", this.deleteTag));
+    this.tagButtons.map((btn) => btn.addEventListener("click", this.deleteTag.bind(this)));
     // this.tagButtons.map((btn) => btn.addEventListener("click", this.handleSearch));
     this.searchBtn.addEventListener("click", (e) => e.preventDefault);
     this.searchInput.addEventListener("keyup", this.handleSearch.bind(this));
@@ -90,7 +90,7 @@ class Home {
 
     this.resetWidthOfInputs();
     this.addEventListenerOnNewTagsButton();
-    // this.handleSearchFromTags(tagValue);
+    this.handleSearch();
   }
 
   /**
@@ -111,7 +111,7 @@ class Home {
    */
   addEventListenerOnNewTagsButton() {
     const tagButtons = Array.from(this.tagsWrapper.querySelectorAll(".btn"));
-    tagButtons.map((btn) => btn.addEventListener("click", this.deleteTag));
+    tagButtons.map((btn) => btn.addEventListener("click", this.deleteTag.bind(this)));
   }
 
   /**
@@ -128,8 +128,18 @@ class Home {
    * deleteTag Function
    * Delete the clicked tag.
    */
-  deleteTag() {
-    this.remove();
+  deleteTag(e) {
+    let self = e.target;
+
+    if (e.target.classList.contains("close-btn")) {
+      if (e.target.parentElement) {
+        e.target.parentElement.remove();
+      }
+      self.remove();
+    }
+
+    self.remove();
+    this.handleSearch();
   }
 
   /**
@@ -184,32 +194,25 @@ class Home {
 
   /**
    * handleSearch Function
-   * Create a new search if the user enters a value in the search bar.
+   * Create a new search if the user enters a value in the search bar or click on tags filter.
    */
-  handleSearch() {
+  handleSearch(tagValue) {
     const t0 = performance.now();
-    const searchValue = this.searchInput.value;
+    const mySearch = new Search();
 
-    // Check if the search is from input or tags
-    // if (tagValue instanceof KeyboardEvent) {
-    //   searchValue = this.searchInput.value;
-    // } else {
-    //   searchValue = tagValue;
-    // }
+    // Check length of search (if the search is from input)
+    if (tagValue instanceof KeyboardEvent) {
+      const searchValue = this.searchInput.value;
 
-    if (searchValue.length === 0) {
-      this.initData();
-    } else if (searchValue.length < 3) {
-      return;
-    } else {
-      const mySearch = new Search();
-      mySearch.searchWithInput(searchValue, t0);
+      if (searchValue.length === 0) {
+        this.initData();
+      } else if (searchValue.length < 3) {
+        return;
+      }
     }
+
+    mySearch.getFilterData(this.searchInput, t0);
   }
-
-  // handleSearchFromTags(tagValue) {
-
-  // }
 }
 
 export default Home;

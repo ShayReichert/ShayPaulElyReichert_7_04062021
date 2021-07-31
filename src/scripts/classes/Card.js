@@ -22,6 +22,8 @@ class RecipeCard {
     this.time = recipeData.time;
     this.ingredients = recipeData.ingredients;
     this.description = recipeData.description;
+    this.appliance = recipeData.appliance;
+    this.ustensils = recipeData.ustensils;
   }
 
   /**
@@ -71,7 +73,9 @@ class RecipeCard {
   getSecondRow(format) {
     const ingredients = this.getRecipeIngredients("div");
     const description = this.getRecipeDescription("p");
-    const elements = [ingredients, description];
+    const appliance = this.getRecipeAppliance("p");
+    const ustensils = this.getRecipeUstensils("p");
+    const elements = [ingredients, description, appliance, ustensils];
 
     return createNodesElements(format, elements, "second-row");
   }
@@ -133,6 +137,30 @@ class RecipeCard {
   getRecipeDescription(format = "p") {
     const className = "card-recipe";
     return createHTMLNodeElement(format, this.description, className);
+  }
+
+  /**
+   * Generate the html of the recipe appliance
+   */
+  getRecipeAppliance(format = "p") {
+    const className = "card-appliance display-none";
+    return createHTMLNodeElement(format, this.appliance, className);
+  }
+
+  /**
+   * Generate the html of the recipe ustensils
+   */
+  getRecipeUstensils(format = "p") {
+    const allUstensils = this.ustensils;
+    const className = "card-ustensils display-none";
+    const ustensilsList = document.createElement("ul");
+
+    allUstensils.map((ustensil) => {
+      const ustensilNode = createHTMLNodeElement("li", ustensil);
+      ustensilsList.append(ustensilNode);
+    });
+
+    return createNodesElements(format, this.ustensils, className);
   }
 }
 
