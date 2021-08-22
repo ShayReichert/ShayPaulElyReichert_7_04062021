@@ -193,6 +193,7 @@ section.dropdown-section {
 
     .input-group {
       height: 4.4rem;
+      min-width: 230px;
       width: auto;
       margin: 8px 10px 0;
 
@@ -254,6 +255,10 @@ section.dropdown-section {
           text-transform: capitalize;
           width: auto;
           cursor: pointer;
+
+          &.hide {
+            display: none;
+          }
         }
       }
     }

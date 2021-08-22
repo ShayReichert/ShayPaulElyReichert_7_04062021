@@ -65,7 +65,6 @@ class TagsDropdown {
 
     dirtyData.map((item) => {
       cleanArray.push(item.replace(/\(.[^(]*\)/g, "").toLowerCase());
-      // ajouter regex pour virer les points à la fin
     });
 
     const uniqueValuesArray = [...new Set(cleanArray)];
@@ -86,7 +85,7 @@ class TagsDropdown {
   }
 
   /**
-   * Set the class name of elements in the dropdown according to their category
+   * Return the class name of elements in the dropdown according to their category
    */
   setClassName(category) {
     let bootstrapClassName = "";

@@ -34,7 +34,6 @@ class Home {
     this.dropdownArrows.map((arrow) => arrow.addEventListener("click", this.setWidthOfInput));
     this.dropDownItem.map((item) => item.addEventListener("click", this.handleClickOnItems.bind(this)));
     this.tagButtons.map((btn) => btn.addEventListener("click", this.deleteTag.bind(this)));
-    // this.tagButtons.map((btn) => btn.addEventListener("click", this.handleSearch));
     this.searchBtn.addEventListener("click", (e) => e.preventDefault);
     this.searchInput.addEventListener("keyup", this.handleSearch.bind(this));
 
@@ -212,6 +211,7 @@ class Home {
     }
 
     mySearch.getFilterData(this.searchInput, t0);
+    mySearch.showRecipeTagsOnly();
   }
 }
 
