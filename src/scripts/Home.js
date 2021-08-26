@@ -15,13 +15,14 @@ import { loadData, getAveragetWidthItem } from "./functions/helpers.js";
  */
 class Home {
   constructor() {
+    this.body = document.querySelector("body");
     this.dropdownsWrapper = document.querySelector(".dropdowns-wrapper");
     this.dropdownInputs = Array.from(this.dropdownsWrapper.querySelectorAll(".form-control"));
     this.dropdownArrows = Array.from(document.querySelectorAll(".dropdown-toggle"));
     this.tagsWrapper = document.querySelector(".tags-wrapper");
     this.dropDownItem = Array.from(document.querySelectorAll(".dropdown-item"));
     this.tagButtons = Array.from(this.tagsWrapper.querySelectorAll(".btn"));
-    this.searchBtn = document.querySelector(".search-btn");
+    this.searchForm = document.querySelector(".search-section .form-inline");
     this.searchInput = document.querySelector(".search-input");
   }
 
@@ -30,22 +31,68 @@ class Home {
    * Add an eventListener to clickable elements.
    */
   addEventListenerOnElements() {
-    this.dropdownInputs.map((input) => input.addEventListener("click", this.clearInputOnClick));
+    this.body.addEventListener("click", this.closeDropdownOnBodyClick);
+    this.dropdownInputs.map((input) => input.addEventListener("click", this.handleClickOnDropdownInputs.bind(this)));
+    this.dropdownInputs.map((input) => input.addEventListener("keyup", this.handleSearchOnDropdown));
     this.dropdownArrows.map((arrow) => arrow.addEventListener("click", this.setWidthOfInput));
     this.dropDownItem.map((item) => item.addEventListener("click", this.handleClickOnItems.bind(this)));
     this.tagButtons.map((btn) => btn.addEventListener("click", this.deleteTag.bind(this)));
-    this.searchBtn.addEventListener("click", (e) => e.preventDefault);
+    this.searchForm.addEventListener("submit", (e) => e.preventDefault());
     this.searchInput.addEventListener("keyup", this.handleSearch.bind(this));
 
     this.initData();
   }
 
   /**
-   * clearInputOnClick Function
-   * Replace the input value with the placeholder value.
+   * closeDropdownOnBodyClick Function
+   * On click on body page, close open dropdowns
    */
-  clearInputOnClick() {
-    this.value = "";
+  closeDropdownOnBodyClick() {
+    const allDropdown = Array.from(document.querySelectorAll(".dropdowns-wrapper .form-control"));
+
+    allDropdown.map((input) => {
+      const isDropdownOpen = input.parentNode.querySelector(".input-group-append").classList.contains("show");
+
+      if (isDropdownOpen) {
+        input.parentNode.querySelector(".dropdown-toggle").click();
+        input.style.width = "auto";
+      }
+    });
+  }
+
+  /**
+   * handleClickOnDropdownInputs Function
+   * On click on the input, manage the behavior of the dropdowns
+   */
+  handleClickOnDropdownInputs(e) {
+    const self = e.target;
+
+    this.clearInputOnClick(self);
+    this.openDropdown(e, self);
+  }
+
+  /**
+   * clearInputOnClick Function
+   * Replace the input value with the placeholder value (if there is currently no search).
+   */
+  clearInputOnClick(self) {
+    if (self.value === "Ingrédients" || self.value === "Appareil" || self.value === "Ustensiles") {
+      self.value = "";
+    }
+  }
+
+  /**
+   * openDropdown Function
+   * Open the dropdown (if it is not already open)
+   */
+  openDropdown(e, self) {
+    e.stopPropagation();
+    const isDropdownOpen = self.parentNode.querySelector(".dropdown-toggle").classList.contains("show");
+
+    if (!isDropdownOpen) {
+      self.parentNode.querySelector(".dropdown-toggle").click();
+      self.focus();
+    }
   }
 
   /**
@@ -59,7 +106,7 @@ class Home {
     const input = inputGroup.querySelector(".form-control");
     const isShow = inputGroup.querySelector(".dropdown-menu").classList.contains("show");
 
-    if (!isShow) {
+    if (window.screen.width >= 1200 && !isShow) {
       const allTags = Array.from(inputGroup.querySelectorAll(".dropdown-item"));
       const averagetWidthItem = getAveragetWidthItem(allTags);
 
@@ -212,6 +259,16 @@ class Home {
 
     mySearch.getFilterData(this.searchInput, t0);
     mySearch.showRecipeTagsOnly();
+  }
+
+  /**
+   * handleSearchOnDropdown Function
+   * Description
+   */
+  handleSearchOnDropdown(e) {
+    const searchValue = e.target.value;
+    const myTagSearch = new Search();
+    myTagSearch.getFilterTags(searchValue, e);
   }
 }
 

@@ -25,7 +25,19 @@ class TagButton {
    * Create a tag button
    */
   createTagButtons() {
-    this.parentElement.append(this.getTagButtonContent());
+    if (this.isTagNotAlreadyClick()) {
+      this.parentElement.append(this.getTagButtonContent());
+    } else {
+      return;
+    }
+  }
+
+  /**
+   * Check that the clicked tag has not already been clicked.
+   */
+  isTagNotAlreadyClick() {
+    const allTagButtons = Array.from(document.querySelectorAll(".tags-wrapper .btn"));
+    return allTagButtons.every((tagButton) => tagButton.textContent !== this.tagValue);
   }
 
   /**

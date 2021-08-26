@@ -240,6 +240,11 @@ section.dropdown-section {
         right: 0;
         border: none;
         opacity: 0;
+        padding: 0;
+
+        @include screen-max($lg) {
+          max-height: none;
+        }
 
         &.show {
           transform: translate3d(0, 3.7rem, 0) !important;
@@ -255,8 +260,10 @@ section.dropdown-section {
           text-transform: capitalize;
           width: auto;
           cursor: pointer;
+          padding: 0.4rem 0.8rem;
 
-          &.hide {
+          &.hide,
+          &.hideSearch {
             display: none;
           }
         }
@@ -270,6 +277,16 @@ section.cards-section {
   .card-deck {
     margin-right: -$margin-default;
     margin-left: -$margin-default;
+  }
+
+  .no-result {
+    display: block;
+    margin: 2rem auto;
+    text-align: center;
+
+    &.hide {
+      display: none;
+    }
   }
 
   .card {

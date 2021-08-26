@@ -7,6 +7,7 @@ class Search {
   constructor() {}
 
   /**
+   * GENERAL SEARCH
    * Hide cards if the search term or the tags does not appear in the recipe.
    */
   getFilterData(input, t0) {
@@ -25,11 +26,14 @@ class Search {
       }
     });
 
+    this.handleNoResult();
+
     const t1 = performance.now();
     // console.log("L'algo searchFromDOM a demandé " + (t1 - t0) + " millisecondes.");
   }
 
   /**
+   * GENERAL SEARCH
    * Return true if the recipe card contain the search value.
    */
   isRecipeContainSearchTerm(input, card) {
@@ -50,6 +54,7 @@ class Search {
   }
 
   /**
+   * GENERAL SEARCH
    * Return true if the recipe card contain the active tag(s).
    */
   isRecipeContainActiveTags(tagCategory, card) {
@@ -76,6 +81,7 @@ class Search {
   }
 
   /**
+   * GENERAL SEARCH
    * Return the correct tag's classname, according to the tag category.
    */
   setClassName(tagCategory) {
@@ -97,7 +103,21 @@ class Search {
   }
 
   /**
-   * TAGS FILTERING : Show only tags that appear in visible recipes (after filtering the search).
+   * GENERAL SEARCH
+   * Show a "no result" text if no recipe match the input value.
+   */
+  handleNoResult() {
+    const allRecipeCards = Array.from(document.querySelectorAll(".cards-section .card"));
+    const noResultText = document.querySelector(".no-result");
+
+    if (allRecipeCards.every((card) => card.classList.contains("hide"))) {
+      noResultText.classList.remove("hide");
+    }
+  }
+
+  /**
+   * TAGS FILTERING
+   * Show only tags that appear in visible recipes (after filtering the search).
    */
   showRecipeTagsOnly() {
     const allDropdownTags = Array.from(document.querySelectorAll(".dropdown-section .dropdown-item"));
@@ -115,7 +135,8 @@ class Search {
   }
 
   /**
-   * TAGS FILTERING: Returns true if the tag appears in the ingredients, appliance, or ustensils of at least one visible recipe.
+   * TAGS FILTERING
+   * Returns true if the tag appears in the ingredients, appliance, or ustensils of at least one visible recipe.
    */
   isInAVisibleRecipe(tag, tagCategory) {
     const activeCards = Array.from(document.querySelectorAll(".cards-section .card:not(.hide)"));
@@ -134,7 +155,8 @@ class Search {
   }
 
   /**
-   * TAGS FILTERING: Return the correct tag's category, according to the tag class name.
+   * TAGS FILTERING
+   * Return the correct tag's category, according to the tag class name.
    */
   setTagCategory(tag) {
     let tagClassNames = tag.classList;
@@ -149,6 +171,36 @@ class Search {
     }
 
     return tagCategory;
+  }
+
+  /**
+   * TAGS SEARCH
+   * Hide tag if the search term does not match.
+   */
+  getFilterTags(searchValue, e) {
+    const allDropdownTags = Array.from(e.target.parentNode.querySelectorAll(".dropdown-item"));
+
+    allDropdownTags.map((tag) => {
+      if (this.isTagContainSearchTerm(searchValue, tag)) {
+        tag.classList.remove("hideSearch");
+      } else {
+        tag.classList.add("hideSearch");
+      }
+    });
+  }
+
+  /**
+   * TAGS SEARCH
+   * Hide tag if the search term does not match.
+   */
+  isTagContainSearchTerm(searchValue, tag) {
+    const tagValue = tag.textContent;
+
+    if (tagValue.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
