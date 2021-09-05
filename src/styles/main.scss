@@ -203,6 +203,10 @@ section.dropdown-section {
         color: $white;
         height: 100%;
 
+        &:focus {
+          outline: 2px solid $white;
+          border: 1px solid $primary;
+        }
         &::placeholder {
           color: $white;
           opacity: 0.5;
@@ -210,6 +214,13 @@ section.dropdown-section {
       }
 
       .input-group-append {
+        .dropdown-toggle {
+          &:focus {
+            outline: 2px solid $white;
+            border: 1px solid $primary;
+          }
+        }
+
         &.show {
           .arrow-down {
             transform: rotate(-180deg);

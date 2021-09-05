@@ -77,10 +77,10 @@ class TagsDropdown {
    */
   getAllTagsLinks(data, category) {
     const classColor = this.setClassName(category);
-    const className = `dropdown-item ${classColor}-bg`;
+    const className = `dropdown-item ${classColor}-bg tabindex="0" `;
 
     return data.map((item) => {
-      return createHTMLNodeElement("a", item, className);
+      return createHTMLNodeElement("button", item, className);
     });
   }
 

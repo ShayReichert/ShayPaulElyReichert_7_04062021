@@ -32,7 +32,8 @@ class Home {
    */
   addEventListenerOnElements() {
     this.body.addEventListener("click", this.closeDropdownOnBodyClick);
-    this.dropdownInputs.map((input) => input.addEventListener("click", this.handleClickOnDropdownInputs.bind(this)));
+    this.dropdownInputs.map((input) => input.addEventListener("click", this.handleFocusOnDropdownInputs.bind(this)));
+    this.dropdownInputs.map((input) => input.addEventListener("keyup", this.handleFocusOnDropdownInputs.bind(this)));
     this.dropdownInputs.map((input) => input.addEventListener("keyup", this.handleSearchOnDropdown));
     this.dropdownArrows.map((arrow) => arrow.addEventListener("click", this.setWidthOfInput));
     this.dropDownItem.map((item) => item.addEventListener("click", this.handleClickOnItems.bind(this)));
@@ -61,14 +62,18 @@ class Home {
   }
 
   /**
-   * handleClickOnDropdownInputs Function
+   * handleFocusOnDropdownInputs Function
    * On click on the input, manage the behavior of the dropdowns
    */
-  handleClickOnDropdownInputs(e) {
+  handleFocusOnDropdownInputs(e) {
     const self = e.target;
 
-    this.clearInputOnClick(self);
-    this.openDropdown(e, self);
+    if (e.type === "click" || e.keyCode == 9) {
+      this.clearInputOnClick(self);
+      this.openDropdown(e, self);
+    } else {
+      return;
+    }
   }
 
   /**
@@ -251,7 +256,7 @@ class Home {
       const searchValue = this.searchInput.value;
 
       if (searchValue.length === 0) {
-        this.initData();
+        this.handleSearch();
       } else if (searchValue.length < 3) {
         return;
       }
