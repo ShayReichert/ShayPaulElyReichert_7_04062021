@@ -1,5 +1,5 @@
-import { createImageElement } from "../functions/helpers.js";
-import close from "../../assets/close-vector.svg";
+import { createImageElement } from "../../functions/helpers.js";
+import close from "../../../assets/close-vector.svg";
 
 /**
  * TagButton Component
@@ -42,6 +42,7 @@ class TagButton {
 
   /**
    * Generate the DOM element of the tag button
+   * @param {string} format Name of the HTML Element generate
    */
   getTagButtonContent(format = "button") {
     const tagNode = document.createElement(format);

@@ -1,6 +1,6 @@
-import { createImageElement, createHTMLNodeElement, createNodesElements } from "../functions/helpers.js";
-import placeholder from "../../assets/images/placeholder.png";
-import clock from "../../assets/clock.svg";
+import { createImageElement, createHTMLNodeElement, createNodesElements } from "../../functions/helpers.js";
+import placeholder from "../../../assets/images/placeholder.png";
+import clock from "../../../assets/clock.svg";
 
 /**
  * RecipeCard Component
@@ -47,8 +47,9 @@ class RecipeCard {
 
   /**
    * Generate the body of the card
+   * @param {string} format Name of the HTML Element generate
    */
-  getCardBody(format) {
+  getCardBody(format = "div") {
     const firstRow = this.getFirstRow();
     const secondRow = this.getSecondRow();
     const elements = [firstRow, secondRow];
@@ -58,8 +59,9 @@ class RecipeCard {
 
   /**
    * Generate the first row of the card
+   * @param {string} format Name of the HTML Element generate
    */
-  getFirstRow(format) {
+  getFirstRow(format = "div") {
     const title = this.getRecipeTitle("h1");
     const time = this.getRecipeTime("div");
     const elements = [title, time];
@@ -69,8 +71,9 @@ class RecipeCard {
 
   /**
    * Generate the first row of the card
+   * @param {string} format Name of the HTML Element generate
    */
-  getSecondRow(format) {
+  getSecondRow(format = "div") {
     const ingredients = this.getRecipeIngredients("div");
     const description = this.getRecipeDescription("p");
     const appliance = this.getRecipeAppliance("p");
@@ -82,6 +85,7 @@ class RecipeCard {
 
   /**
    * Generate the html of the recipe title
+   * @param {string} format Name of the HTML Element generate
    */
   getRecipeTitle(format = "h1") {
     const className = "card-title";
@@ -90,6 +94,7 @@ class RecipeCard {
 
   /**
    * Generate the html of the recipe time
+   * @param {string} format Name of the HTML Element generate
    */
   getRecipeTime(format = "div") {
     const className = "card-timer";
@@ -103,6 +108,7 @@ class RecipeCard {
 
   /**
    * Generate the html of the recipe ingredients
+   * @param {string} format Name of the HTML Element generate
    */
   getRecipeIngredients(format = "div") {
     const ingredientsWrapperNode = document.createElement(format);
@@ -133,6 +139,7 @@ class RecipeCard {
 
   /**
    * Generate the html of the recipe description
+   * @param {string} format Name of the HTML Element generate
    */
   getRecipeDescription(format = "p") {
     const className = "card-recipe";
@@ -141,6 +148,7 @@ class RecipeCard {
 
   /**
    * Generate the html of the recipe appliance
+   * @param {string} format Name of the HTML Element generate
    */
   getRecipeAppliance(format = "p") {
     const className = "card-appliance display-none";
@@ -149,6 +157,7 @@ class RecipeCard {
 
   /**
    * Generate the html of the recipe ustensils
+   * @param {string} format Name of the HTML Element generate
    */
   getRecipeUstensils(format = "p") {
     const allUstensils = this.ustensils;

@@ -1,7 +1,6 @@
 import recipes from "../../recipes.js";
 
 /**
- * loadData Function
  * Handle data loading
  */
 const loadData = function () {

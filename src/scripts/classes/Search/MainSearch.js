@@ -1,14 +1,15 @@
-import { isElementExist } from "../functions/helpers";
+import { isElementExist } from "../../functions/helpers";
 
-class Search {
+class MainSearch {
   /**
-   * Create new search logic
+   * Create new main research logic
    */
   constructor() {}
 
   /**
-   * GENERAL SEARCH
    * Hide cards if the search term or the tags does not appear in the recipe.
+   * @param {HTMLElement} input
+   * @param {Number} t0 First time code for performance test
    */
   getFilterData(input, t0) {
     const allRecipeCards = Array.from(document.querySelectorAll(".cards-section .card"));
@@ -28,13 +29,15 @@ class Search {
 
     this.handleNoResult();
 
-    const t1 = performance.now();
-    // console.log("L'algo searchFromDOM a demandé " + (t1 - t0) + " millisecondes.");
+    const t1 = performance.now(); // performance test
+    // --- Uncomment the line below and open the console to activate test mode. --- //
+    // console.log("L'algo searchFromDOM a demandé " + (t1 - t0) + " millisecondes."); // performance test
   }
 
   /**
-   * GENERAL SEARCH
    * Return true if the recipe card contain the search value.
+   * @param {HTMLElement} input
+   * @param {HTMLElement} card Div element (single recipe card to test)
    */
   isRecipeContainSearchTerm(input, card) {
     const searchValue = input.value;
@@ -54,8 +57,9 @@ class Search {
   }
 
   /**
-   * GENERAL SEARCH
    * Return true if the recipe card contain the active tag(s).
+   * @param {string} tagCategory Tag category
+   * @param {HTMLElement} card Div element (single recipe card to test)
    */
   isRecipeContainActiveTags(tagCategory, card) {
     const classColor = this.setClassName(tagCategory);
@@ -81,8 +85,8 @@ class Search {
   }
 
   /**
-   * GENERAL SEARCH
    * Return the correct tag's classname, according to the tag category.
+   * @param {string} tagCategory Tag category
    */
   setClassName(tagCategory) {
     let className = "";
@@ -103,7 +107,6 @@ class Search {
   }
 
   /**
-   * GENERAL SEARCH
    * Show a "no result" text if no recipe match the input value.
    */
   handleNoResult() {
@@ -112,96 +115,10 @@ class Search {
 
     if (allRecipeCards.every((card) => card.classList.contains("hide"))) {
       noResultText.classList.remove("hide");
-    }
-  }
-
-  /**
-   * TAGS FILTERING
-   * Show only tags that appear in visible recipes (after filtering the search).
-   */
-  showRecipeTagsOnly() {
-    const allDropdownTags = Array.from(document.querySelectorAll(".dropdown-section .dropdown-item"));
-
-    allDropdownTags.map((tag) => {
-      const tagCategory = this.setTagCategory(tag);
-      const thisTagIsInAVisibleRecipe = this.isInAVisibleRecipe(tag.textContent, tagCategory);
-
-      if (thisTagIsInAVisibleRecipe) {
-        tag.classList.remove("hide");
-      } else {
-        tag.classList.add("hide");
-      }
-    });
-  }
-
-  /**
-   * TAGS FILTERING
-   * Returns true if the tag appears in the ingredients, appliance, or ustensils of at least one visible recipe.
-   */
-  isInAVisibleRecipe(tag, tagCategory) {
-    const activeCards = Array.from(document.querySelectorAll(".cards-section .card:not(.hide)"));
-
-    const arrayOfBooleans = activeCards.map((card) => {
-      const recipeTagCategory = card.querySelector(`.card-${tagCategory}`).textContent;
-
-      if (recipeTagCategory.toLowerCase().indexOf(tag.toLowerCase()) !== -1) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-
-    return arrayOfBooleans.some((elem) => elem);
-  }
-
-  /**
-   * TAGS FILTERING
-   * Return the correct tag's category, according to the tag class name.
-   */
-  setTagCategory(tag) {
-    let tagClassNames = tag.classList;
-    let tagCategory = "";
-
-    if (tagClassNames.contains("primary-bg")) {
-      tagCategory = "ingredients";
-    } else if (tagClassNames.contains("success-bg")) {
-      tagCategory = "appliance";
     } else {
-      tagCategory = "ustensils";
-    }
-
-    return tagCategory;
-  }
-
-  /**
-   * TAGS SEARCH
-   * Hide tag if the search term does not match.
-   */
-  getFilterTags(searchValue, e) {
-    const allDropdownTags = Array.from(e.target.parentNode.querySelectorAll(".dropdown-item"));
-
-    allDropdownTags.map((tag) => {
-      if (this.isTagContainSearchTerm(searchValue, tag)) {
-        tag.classList.remove("hideSearch");
-      } else {
-        tag.classList.add("hideSearch");
-      }
-    });
-  }
-
-  /**
-   * TAGS SEARCH
-   * Hide tag if the search term does not match.
-   */
-  isTagContainSearchTerm(searchValue, tag) {
-    const tagValue = tag.textContent;
-
-    if (tagValue.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1) {
-      return true;
-    } else {
-      return false;
+      noResultText.classList.add("hide");
     }
   }
 }
 
-export default Search;
+export default MainSearch;

@@ -1,4 +1,4 @@
-import { createHTMLNodeElement } from "../functions/helpers.js";
+import { createHTMLNodeElement } from "../../functions/helpers.js";
 
 /**
  * TagsDropdown Component
@@ -8,7 +8,8 @@ class TagsDropdown {
    * Create a dropdown with all unique values from a category (fetch from data)
    * @param {HTMLElement} parentElement Wrapper HTML element
    * @param {Object} recipeData Recipe data
-   * @param {string} className Tag class name
+   * @param {string} category Tag category
+   * @param {string} subcategory If a category contains several subcategories
    */
 
   constructor(parentElement, recipeData, category, subcategory) {
@@ -59,6 +60,7 @@ class TagsDropdown {
 
   /**
    * Remove text between parentesis and duplicate values
+   * @param {Array} dirtyData Array of raw data
    */
   getCleanDataArray(dirtyData) {
     let cleanArray = [];
@@ -74,6 +76,8 @@ class TagsDropdown {
 
   /**
    * Generate the html of all tags
+   * @param {Array} data Array of data
+   * @param {string} category Tag category
    */
   getAllTagsLinks(data, category) {
     const classColor = this.setClassName(category);
@@ -86,6 +90,7 @@ class TagsDropdown {
 
   /**
    * Return the class name of elements in the dropdown according to their category
+   * @param {string} category Tag category
    */
   setClassName(category) {
     let bootstrapClassName = "";
