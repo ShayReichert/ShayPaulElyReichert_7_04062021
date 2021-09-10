@@ -44,11 +44,15 @@ class MainSearch {
     const recipeName = card.querySelector(".card-title").textContent;
     const recipeDescription = card.querySelector(".card-recipe").textContent;
     const recipeIngredients = card.querySelector(".card-ingredients").textContent;
+    const recipeAppliance = card.querySelector(".card-appliance").textContent;
+    const recipeUstensils = card.querySelector(".card-ustensils").textContent;
 
     if (
       recipeName.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
       recipeDescription.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
-      recipeIngredients.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
+      recipeIngredients.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
+      recipeAppliance.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
+      recipeUstensils.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
     ) {
       return true;
     } else {
